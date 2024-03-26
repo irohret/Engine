@@ -1,2 +1,16 @@
+# Ignore directory
+.vscode/
 
-#ignore dir.vscode
+# Ignore executable files
+*.exe
+
+
+# IDE or editor specific files
+.idea/
+.DS_Store
+
+# Compiled code or build artifacts
+/build/
+/dist/
+*.o
+
