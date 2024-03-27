@@ -1,7 +1,7 @@
 #include <vector>
 #include <string>
 
-#include "Quaternion.h"
+#include "../math/Quaternion.h"
 #include "Bone.h"
 
 class Aramtrue {

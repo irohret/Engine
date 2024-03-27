@@ -2,7 +2,7 @@
 #include <cmath>
 #include <iostream>
 
-#include "Vector.h"
+#include "../math/Vector.h"
 
 // typedef struct Vector2{
 //     float x, y;

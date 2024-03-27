@@ -2,7 +2,7 @@
 #include <vector>
 #include <string>
 
-#include "Quaternion.h"
+#include "../math/Quaternion.h"
 
 class Bone {
 	std::string name;

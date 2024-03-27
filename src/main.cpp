@@ -11,8 +11,8 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
-#include "Quaternion.h"
-#include "Vector.h"
+#include "../math/Quaternion.h"
+#include "../math/Vector.h"
 #include "Bone.h"
 #include "Armature.h"
 #include "Camera.h"

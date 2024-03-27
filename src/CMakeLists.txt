@@ -35,7 +35,7 @@ file(GLOB_RECURSE SOURCE_FILES
 link_libraries(
     ${OPENGL_LIBRARIES}
     ${GLFW3_LIBRARIES}
-    m # Math library
+    # Math library
 )
 
 # Create executable
@@ -51,7 +51,7 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 
 
-#TODO: test this
+# TODO: test this
 # 1) create and build: mkdir build && cd build
 # 2) run cmake /path/to/project
 # 3) run make || cmake --build

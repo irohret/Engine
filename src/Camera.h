@@ -4,7 +4,7 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
-#include "Matrix.h"
+#include "../math/Matrix.h"
 
 const float YAW = -90.0f;
 const float PITCH = 0.0f;
