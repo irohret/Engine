@@ -16,6 +16,7 @@ struct Quaternion {
     Quaternion Conjugation();
     void Normalize();
 
+    float Norm();
 };
 
 /**
