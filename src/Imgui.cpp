@@ -1,5 +1,6 @@
 // ImGui.cpp
 #include "Imgui.h"
+#include <imgui.h>
 #include "../src/Window/Window.h"
 
 ImGuiManager::ImGuiManager() {

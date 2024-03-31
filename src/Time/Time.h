@@ -1,12 +1,16 @@
 #pragma once
 
 class Time{
-    Time();
 
-    float GetTime();
+    public: 
+        Time();
+        ~Time();
+        
+        float _deltaTime; 
+        float GetTime();
+        float GetDeltaTime();
+        void Update();
 
-    float GetDeltaTime();
-
-    void Update();
+    private:
 
 };

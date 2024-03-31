@@ -20,10 +20,10 @@ SRC_FILES = $(wildcard $(SRC_DIR)/*.cpp) \
             $(SHD_DIR)/VBO.cpp \
             $(SHD_DIR)/EBO.cpp \
             $(SHD_DIR)/Shader.cpp \
-            $(WINDOW_DIR)/Window.cpp\
             $(MTH_DIR)/Matrix.cpp \
             $(MTH_DIR)/Vector.cpp \
             $(MTH_DIR)/Quaternion.cpp \
+            $(WINDOW_DIR)/Window.cpp
 
 
 IMGUI_SRC_FILES = $(wildcard $(IMGUI_DIR)/*.cpp) \

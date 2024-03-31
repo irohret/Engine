@@ -1,9 +1,15 @@
+# User-specific files
+*.rsuser
+*.suo
+*.user
+
+
 # Ignore directory
 .vscode/
+.vs/ 
 
 # Ignore executable files
 *.exe
-
 
 # IDE or editor specific files
 .idea/

@@ -4,9 +4,7 @@
 #include <stdexcept>
 #include "Window.h"
 
-void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
-    glViewport(0, 0, width, height);
-}
+
 
 Window::Window(int width, int height, const char* title) {
     // Initialize GLFW
@@ -43,8 +41,8 @@ Window::Window(int width, int height, const char* title) {
     }
 
     // Set the viewport
-    // glViewport(0, 0, width, height);
-    glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
+     glViewport(0, 0, width, height);
+    //glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 }
 
 Window::~Window() {
