@@ -10,6 +10,8 @@ To run the engine, follow these steps:
 ```
 mkdir build
 cd build
+cmake ..
+make
 ```
 
 ## Directory Structure

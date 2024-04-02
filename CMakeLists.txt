@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.5)
-project(CYBERCORE VERSION 1.0.0)
+project(CyberCore_Engine VERSION 1.0.0)
 cmake_policy(SET CMP0072 NEW)
 
 if(CMAKE_COMPILER_IS_GNUCCXX)
@@ -53,21 +53,28 @@ file(WRITE ${CMAKE_CURRENT_SOURCE_DIR}/CyberCore/Vendor/imgui/CMakeLists.txt
 # Include ImGui from CyberCore/Vendor/imgui
 add_subdirectory(CyberCore/Vendor/imgui)
 
-add_executable(CYBERCORE
+add_executable(CyberCore_Engine
     CyberCoreEngine/src/config.h
     CyberCoreEngine/src/main.cpp 
     CyberCore/Vendor/glad/glad.c
 )
 
 # Add include directories for linking
-target_include_directories(CYBERCORE 
+target_include_directories(CyberCore_Engine 
     PRIVATE
     CyberCore/Vendor 
 )
 
 # Link GLFW, ImGui, and OpenGL libraries
-target_link_libraries(CYBERCORE
+target_link_libraries(CyberCore_Engine
     glfw
     imgui
     OpenGL::GL 
+)
+
+add_custom_command(TARGET CyberCore_Engine
+    POST_BUILD
+    COMMAND ./CyberCore_Engine
+    WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+    COMMENT "Running Engine after build"
 )
