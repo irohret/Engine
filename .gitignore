@@ -1,0 +1,25 @@
+
+find . -type d -name '.git' -exec rm -rf {} \;
+
+
+# The canonical out-of-tree build subdirectory
+build
+build-*
+
+# VS stuff
+.vs
+CMakeSettings.json
+Win32
+x64
+Debug
+Release
+
+# CMake stuff
+CMakeCache.txt
+CMakeFiles
+CMakeScripts
+CMakeDoxyfile.in
+CMakeDoxygenDefaults.cmake
+cmake_install.cmake
+cmake_uninstall.cmake
+
