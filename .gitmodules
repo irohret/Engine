@@ -11,7 +11,7 @@
 	url = https://github.com/ocornut/imgui.git
 	branch = docking
 [submodule "SDL"]
-	path = SDL
+	path = CyberCore/Vendor/SDL
 	url = https://github.com/libsdl-org/SDL.git
 	branch = main
 [submodule "Vulkan-Headers"]
