@@ -1,14 +1,20 @@
 [submodule "glfw"]
 	path = CyberCore/Vendor/glfw
 	url = https://github.com/glfw/glfw
-[submodule "imgui"]
-	path = CyberCore/Vendor/imgui
-	url = https://github.com/ocornut/imgui
 
 [submodule "glm"]
 	path = CyberCore/Vendor/glm
 	url = https://github.com/g-truc/glm
+
 [submodule "CyberCore/Vendor/imgui"]
 	path = CyberCore/Vendor/imgui
 	url = https://github.com/ocornut/imgui.git
 	branch = docking
+[submodule "SDL"]
+	path = SDL
+	url = https://github.com/libsdl-org/SDL.git
+	branch = main
+[submodule "Vulkan-Headers"]
+	path = CyberCore/Vendor/Vulkan-Headers
+	url = https://github.com/KhronosGroup/Vulkan-Headers
+	branch = main
