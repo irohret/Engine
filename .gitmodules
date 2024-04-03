@@ -8,3 +8,7 @@
 [submodule "glm"]
 	path = CyberCore/Vendor/glm
 	url = https://github.com/g-truc/glm
+[submodule "CyberCore/Vendor/imgui"]
+	path = CyberCore/Vendor/imgui
+	url = https://github.com/ocornut/imgui.git
+	branch = docking
