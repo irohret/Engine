@@ -1,6 +1,5 @@
-
+# find and remove .git directories 
 find . -type d -name '.git' -exec rm -rf {} \;
-
 
 # The canonical out-of-tree build subdirectory
 build
@@ -8,6 +7,7 @@ build-*
 
 # VS stuff
 .vs
+.vscode
 CMakeSettings.json
 Win32
 x64

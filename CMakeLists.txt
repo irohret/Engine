@@ -1,5 +1,11 @@
-cmake_minimum_required(VERSION 3.5)
-project(CyberCore_Engine VERSION 1.0.0)
+# main CMakeLists.txt
+cmake_minimum_required(VERSION 3.24)
+project(CyberCore VERSION 1.0.0)
+
+
+# Set C++ standard
+# set(CMAKE_CXX_STANDARD 17)
+# set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 if(WIN32)
   if (CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
@@ -19,7 +25,9 @@ else()
   set(CMAKE_CXX_FLAGS_RELEASE "-O3")
 endif()
 
-# Check if Git is available
+
+
+# Check if Git is available (used for git submodules)
 find_package(Git QUIET)
 
 if(EXISTS "${PROJECT_SOURCE_DIR}/.git")
@@ -35,55 +43,57 @@ if(EXISTS "${PROJECT_SOURCE_DIR}/.git")
     endif()
 endif()
 
-set(CMAKE_CXX_STANDARD 17)
 
-# Set build type if not provided
-if(NOT CMAKE_BUILD_TYPE)
-    set(CMAKE_BUILD_TYPE Release)
-endif()
+# Include directories
+include_directories(CyberCore/Vendor/glfw/include)
+include_directories(CyberCore/Vendor/imgui)
+include_directories(CyberCore/Vendor/imgui/backends)
+include_directories(CyberCore/Vendor/glad/include)
 
-find_package(OpenGL REQUIRED)
-
-# add Vulkan and SDL
-add_subdirectory(CyberCore/Vendor/glfw EXCLUDE_FROM_ALL)
-add_subdirectory(CyberCore/Vendor/glm EXCLUDE_FROM_ALL)
-add_subdirectory(CyberCore/Vendor/SDL)
-add_subdirectory(CyberCore/Vendor/Vulkan-Headers)
-
-# Include ImGui from CyberCore/Vendor/imgui
-add_subdirectory(CyberCore/Vendor/imgui)
-
-
-add_executable(CyberCore_Engine
-    CyberCoreEngine/src/config.h
-    CyberCoreEngine/src/main.cpp 
-    CyberCore/Vendor/glad/glad.c
-    CyberCore/Vendor/imgui/imgui.h
+set(IMGUI_SOURCES
+    CyberCore/Vendor/imgui/imgui.cpp
+    CyberCore/Vendor/imgui/imgui_demo.cpp
+    CyberCore/Vendor/imgui/imgui_draw.cpp
+    CyberCore/Vendor/imgui/imgui_tables.cpp
+    CyberCore/Vendor/imgui/imgui_widgets.cpp
     CyberCore/Vendor/imgui/backends/imgui_impl_glfw.cpp
-    CyberCore/Vendor/imgui/backends/imgui_impl_glfw.h
     CyberCore/Vendor/imgui/backends/imgui_impl_opengl3.cpp
+)
+
+# Define ImGui headers
+set(IMGUI_HEADERS
+    CyberCore/Vendor/imgui/imgui.h
+    CyberCore/Vendor/imgui/imgui_internal.h
+    CyberCore/Vendor/imgui/imconfig.h
+    CyberCore/Vendor/imgui/imstb_rectpack.h
+    CyberCore/Vendor/imgui/imstb_textedit.h
+    CyberCore/Vendor/imgui/imstb_truetype.h
+    CyberCore/Vendor/imgui/backends/imgui_impl_glfw.h
     CyberCore/Vendor/imgui/backends/imgui_impl_opengl3.h
 )
 
-# Add include directories for linking
-target_include_directories(CyberCore_Engine
-    PUBLIC
-    ${CMAKE_CURRENT_SOURCE_DIR}/CyberCore/Vendor 
-    ${CMAKE_CURRENT_SOURCE_DIR}/CyberCore/Vendor/imgui 
-    ${CMAKE_CURRENT_SOURCE_DIR}/CyberCore/Vendor/imgui/backends 
-)
+# Add subdirectories
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/CyberCore/Vendor/glfw)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/CyberCore/Vendor/glad)
 
-# Link GLFW, ImGui, and OpenGL libraries
-target_link_libraries(CyberCore_Engine 
-    glfw
-    SDL3::SDL3
-    ImGui 
-    Vulkan::Headers
-)
 
-add_custom_command(TARGET CyberCore_Engine
+# Add executable
+# add_executable(${PROJECT_NAME} CyberCoreEngine/src/main.cpp ${IMGUI_SOURCES} ${IMGUI_HEADERS})
+
+if(WIN32)
+    # prevent CMD prompt window pops up on execution. (WIN32)
+    add_executable(${PROJECT_NAME} WIN32 CyberCoreEngine/src/main.cpp ${IMGUI_SOURCES} ${IMGUI_HEADERS})
+else()
+    add_executable(${PROJECT_NAME} CyberCoreEngine/src/main.cpp ${IMGUI_SOURCES} ${IMGUI_HEADERS})
+endif()
+
+
+# Link libraries
+target_link_libraries(${PROJECT_NAME} glfw glad)
+
+add_custom_command(TARGET ${PROJECT_NAME}
     POST_BUILD
-    COMMAND ./CyberCore_Engine
+    COMMAND ./${PROJECT_NAME}
     WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
     COMMENT "Running Engine after build"
 )
