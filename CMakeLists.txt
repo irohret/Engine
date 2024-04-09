@@ -1,11 +1,11 @@
 # main CMakeLists.txt
 cmake_minimum_required(VERSION 3.24)
-project(CyberCore VERSION 1.0.0)
+project(CyberCore_Application VERSION 1.0.0)
 
 
 # Set C++ standard
-# set(CMAKE_CXX_STANDARD 17)
-# set(CMAKE_CXX_STANDARD_REQUIRED True)
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 if(WIN32)
   if (CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
@@ -91,9 +91,9 @@ endif()
 # Link libraries
 target_link_libraries(${PROJECT_NAME} glfw glad)
 
-add_custom_command(TARGET ${PROJECT_NAME}
-    POST_BUILD
-    COMMAND ./${PROJECT_NAME}
-    WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
-    COMMENT "Running Engine after build"
-)
+# add_custom_command(TARGET ${PROJECT_NAME}
+#     POST_BUILD
+#     COMMAND ./${PROJECT_NAME}
+#     WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+#     COMMENT "Running Engine after build"
+# )

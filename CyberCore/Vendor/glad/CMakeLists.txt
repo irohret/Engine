@@ -1,4 +1,3 @@
-
 # glad CMake
 project(glad)
 

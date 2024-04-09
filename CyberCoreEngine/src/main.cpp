@@ -185,6 +185,7 @@ void AddTab(const std::string& tabName) {
 void _InspectorWindow() {
     ImGui::Begin("Window 3", nullptr, ImGuiDockNodeFlags_AutoHideTabBar );
 
+   
     if (ImGui::BeginTabBar("Inspector#left_tabs_bar")) {
         if (ImGui::BeginTabItem("Inspector View")) {
             ImGui::InputText("search", INPUT_BUF, IM_ARRAYSIZE(INPUT_BUF));
@@ -198,15 +199,20 @@ void _InspectorWindow() {
         
         ImGui::EndTabBar();
     }
+    
 
     ImGui::End();
 }
 
 
 void _HierarchyWindow() {
+
+
     ImGui::Begin("Window 1", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiDockNodeFlags_AutoHideTabBar);
     
     ImVec2 size = ImGui::GetWindowSize();
+
+
     
     if (ImGui::BeginTabBar("Hierarchy#left_tabs_bar")) {
         if (ImGui::BeginTabItem("Hierarchy")) {
@@ -222,7 +228,6 @@ void _HierarchyWindow() {
        // TODO:: ADD a GameObject
     }
 
-    // Check if right mouse button is clicked in an empty area
     if (ImGui::IsWindowHovered() && ImGui::IsMouseReleased(ImGuiMouseButton_Right) && !ImGui::IsAnyItemHovered()) {
         ImGui::OpenPopup("HierarchyPopup"); // Open the context menu popup
     }
@@ -303,12 +308,28 @@ void CreateDockSpaceWindow(float MenuBarHeight) {
 // Function to create the toolbar at the top
 float  _MenuBar(){
 
+    // ImVec4 bck_color = ImVec4(1.00f, 1.00f, 1.00f, 1.00f); // white
+    ImVec4 bck_color = ImVec4(0.30f, 0.31f, 0.34f, 1.0f); // grey
+    ImVec4 text_color = ImVec4(0.0f, 0.0f, 0.0f, 1.0f); // balck
+    ImVec4 file_menu_bck = ImVec4(1.00f, 1.00f, 1.00f, 1.00f);
+    
+    
     ImVec2 displaySize = ImGui::GetIO().DisplaySize;
-
-    ImGui::SetNextWindowPos(ImVec2({0, 0}));
+    ImGui::SetNextWindowPos(ImVec2({0, -1})); // (-1) remove single pixel padding
     ImGui::SetNextWindowSize(ImVec2(displaySize.x, 0));
+
+    // Set background color
+    ImGui::PushStyleColor(ImGuiCol_WindowBg, bck_color);
+    ImGui::PushStyleColor(ImGuiCol_MenuBarBg, file_menu_bck);
+    ImGui::PushStyleColor(ImGuiCol_Text, text_color);
+
+    ImGui::PushStyleVar(ImGuiStyleVar_WindowMinSize, ImVec2(0.0f, 0.0f));
+    ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(0.0f, 0.0f));
+	ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 4.0f));
+   
+
     ImGui::Begin(" ", &ToolBarActive, ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoTitleBar);
-     if(ImGui::BeginMenuBar()){
+    if(ImGui::BeginMenuBar()){
         if(ImGui::BeginMenu("file")){
             if(ImGui::MenuItem("New Scence..")){ }
             if(ImGui::MenuItem("Open Scene..")){ }
@@ -366,11 +387,48 @@ float  _MenuBar(){
 
     ImGui::End();
 
+    ImGui::PopStyleColor(3); // pop color changes
+    ImGui::PopStyleVar(3);
+
     // std::cout << ImGui::GetWindowSize().y << std::endl;
 
     return ImGui::GetWindowSize().y;
 }
 
+float _toolBar(float menubarHeight) {
+    ImVec4 bck_color = ImVec4(0.30f, 0.31f, 0.34f, 1.0f);
+
+    ImVec2 displaySize = ImGui::GetIO().DisplaySize;
+
+    ImGui::SetNextWindowPos(ImVec2({0, 0})); // (-1) remove single pixel padding
+    ImGui::SetNextWindowSize(ImVec2(displaySize.x, 0));
+
+    ImGui::PushStyleColor(ImGuiCol_WindowBg, bck_color);
+
+    ImGui::Begin(" ", NULL, ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoTitleBar);
+    
+    // Calculate the center position of the toolbar
+    ImVec2 toolbarCenter(displaySize.x / 2.0f, menubarHeight + ImGui::GetWindowSize().y / 2.0f);
+
+    // Calculate the width of the two buttons combined
+    float totalButtonWidth = 80.0f + 80.0f + 16.0f; // 80 for each button + 16 for spacing
+
+    // Position the "Play" button at the center
+    ImGui::SetCursorPos(ImVec2(toolbarCenter.x - totalButtonWidth / 2.0f, ImGui::GetCursorPosY()));
+    if (ImGui::Button("Play", ImVec2(80, 0))) {
+        // Handle play button click
+    }
+
+    // Position the "Pause" button next to the "Play" button
+    ImGui::SameLine();
+    if (ImGui::Button("Pause", ImVec2(80, 0))) {
+        // Handle pause button click
+    }
+
+    ImGui::PopStyleColor();
+    ImGui::End();
+    return ImGui::GetWindowSize().y;
+}
 
 int main() {
     // Initialize GLFW
@@ -380,7 +438,7 @@ int main() {
     }
 
     // Create a GLFW window
-    GLFWwindow* window = glfwCreateWindow(WIDTH, HEIGHT, "Double ImGui Layout", NULL, NULL);
+    GLFWwindow* window = glfwCreateWindow(WIDTH, HEIGHT, "\tCyberCore", NULL, NULL);
     if (!window) {
         std::cerr << "Failed to create GLFW window" << std::endl;
         glfwTerminate();
@@ -423,8 +481,14 @@ int main() {
 
         // Create the toolbar at the top
         float menuBarHeight = _MenuBar();
+
+        float toolBarHeight = _toolBar(menuBarHeight);
+        std::cout << toolBarHeight << std::endl;
+
+        toolBarHeight = 0;
         // Create and dock the dockspace window
-        CreateDockSpaceWindow(menuBarHeight - 370.0f);
+        CreateDockSpaceWindow(toolBarHeight + 20); // 20px offset for tab height
+        
         
 
         // Rendering

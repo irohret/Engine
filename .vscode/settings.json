@@ -59,6 +59,7 @@
   "files.associations": {
     ".fantomasignore": "ignore",
     "iostream": "cpp",
-    "glad.h": "c"
+    "glad.h": "c",
+    "ostream": "cpp"
   }
 }
