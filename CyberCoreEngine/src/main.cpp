@@ -10,7 +10,7 @@ bool ToolBarActive = true;
 
 // vertex shader source code
 const char* vertexShaderSource = R"(
-    #version 330 core
+    #version 410 core
     layout (location = 0) in vec3 aPos;
     void main()
     {
@@ -20,7 +20,7 @@ const char* vertexShaderSource = R"(
 
 // fragment shader source code
 const char* fragmentShaderSource = R"(
-    #version 330 core
+    #version 410 core
     out vec4 FragColor;
     void main()
     {
@@ -437,6 +437,11 @@ int main() {
         return -1;
     }
 
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
+    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+
     // Create a GLFW window
     GLFWwindow* window = glfwCreateWindow(WIDTH, HEIGHT, "\tCyberCore", NULL, NULL);
     if (!window) {
@@ -467,7 +472,7 @@ int main() {
     ImGui_ImplGlfw_InitForOpenGL(window, true);
 
     // Setup ImGui OpenGL binding
-    ImGui_ImplOpenGL3_Init("#version 330");
+    ImGui_ImplOpenGL3_Init("#version 410");
 
     // Main loop
     while (!glfwWindowShouldClose(window)) {
@@ -483,7 +488,7 @@ int main() {
         float menuBarHeight = _MenuBar();
 
         float toolBarHeight = _toolBar(menuBarHeight);
-        std::cout << toolBarHeight << std::endl;
+        //std::cout << toolBarHeight << std::endl;
 
         toolBarHeight = 0;
         // Create and dock the dockspace window

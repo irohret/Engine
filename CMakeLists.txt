@@ -70,7 +70,9 @@ set(IMGUI_HEADERS
     CyberCore/Vendor/imgui/imstb_truetype.h
     CyberCore/Vendor/imgui/backends/imgui_impl_glfw.h
     CyberCore/Vendor/imgui/backends/imgui_impl_opengl3.h
+    
 )
+
 
 # Add subdirectories
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/CyberCore/Vendor/glfw)
@@ -91,9 +93,12 @@ endif()
 # Link libraries
 target_link_libraries(${PROJECT_NAME} glfw glad)
 
-# add_custom_command(TARGET ${PROJECT_NAME}
-#     POST_BUILD
-#     COMMAND ./${PROJECT_NAME}
-#     WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
-#     COMMENT "Running Engine after build"
-# )
+if(APPLE)
+    add_custom_command(TARGET ${PROJECT_NAME}
+        POST_BUILD
+        COMMAND ./${PROJECT_NAME}
+        WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+        COMMENT "Running Engine after build"
+    )
+endif()
+
