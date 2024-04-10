@@ -46,9 +46,26 @@ endif()
 
 # Include directories
 include_directories(CyberCore/Vendor/glfw/include)
+include_directories(CyberCore/Vendor/SDL)
 include_directories(CyberCore/Vendor/imgui)
 include_directories(CyberCore/Vendor/imgui/backends)
 include_directories(CyberCore/Vendor/glad/include)
+include_directories(CyberCore/Vendor/SDL/src/)
+
+set(SDL_HEADERS
+    CyberCore/Vendor/SDL/include/SDL3/SDL.h
+    CyberCore/Vendor/SDL/include/SDL3/SDL_stdinc.h
+    CyberCore/Vendor/SDL/include/build_config/SDL_build_config.h
+    CyberCore/Vendor/SDL/src/SDL_internal.h
+    CyberCore/Vendor/SDL/src/core/linux/SDL_dbus.h
+    CyberCore/Vendor/SDL/src/core/linux/SDL_dbus.h
+    CyberCore/Vendor/SDL/src/audio/SDL_sysaudio.h
+    CyberCore/Vendor/SDL/src/events/SDL_events_c.h
+)
+
+set(SDL_SOURCES
+    CyberCore/Vendor/SDL/src/SDL.c  
+)
 
 set(IMGUI_SOURCES
     CyberCore/Vendor/imgui/imgui.cpp
@@ -70,13 +87,19 @@ set(IMGUI_HEADERS
     CyberCore/Vendor/imgui/imstb_truetype.h
     CyberCore/Vendor/imgui/backends/imgui_impl_glfw.h
     CyberCore/Vendor/imgui/backends/imgui_impl_opengl3.h
-    
 )
 
+set(CORE_CXX
+    CyberCore/Core/CC_ImGuI.h
+    CyberCore/Core/CC_ImGuI.cpp
+    CyberCore/Core/CC_Window.cpp
+    CyberCore/Core/CC_Window.h
+)
 
 # Add subdirectories
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/CyberCore/Vendor/glfw)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/CyberCore/Vendor/glad)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/CyberCore/Vendor/SDL)
 
 
 # Add executable
@@ -84,14 +107,16 @@ add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/CyberCore/Vendor/glad)
 
 if(WIN32)
     # prevent CMD prompt window pops up on execution. (WIN32)
-    add_executable(${PROJECT_NAME} WIN32 CyberCoreEngine/src/main.cpp ${IMGUI_SOURCES} ${IMGUI_HEADERS})
+    add_executable(${PROJECT_NAME} WIN32 CyberCoreEngine/src/main.cpp ${CORE_CXX} ${SDL_HEADERS} ${SDL_SOURCES} ${CONFIG} ${IMGUI_SOURCES} ${IMGUI_HEADERS})
 else()
-    add_executable(${PROJECT_NAME} CyberCoreEngine/src/main.cpp ${IMGUI_SOURCES} ${IMGUI_HEADERS})
+      add_executable(${PROJECT_NAME} CyberCoreEngine/src/main.cpp  ${CORE_CXX} ${SDL_HEADERS} ${SDL_SOURCES} ${CONFIG} ${IMGUI_SOURCES} ${IMGUI_HEADERS})
 endif()
 
 
 # Link libraries
-target_link_libraries(${PROJECT_NAME} glfw glad)
+target_link_libraries(${PROJECT_NAME} glfw glad SDL3::SDL3)
+
+target_compile_definitions(${PROJECT_NAME} PUBLIC SDL_MAIN_USE_CALLBACKS)
 
 if(APPLE)
     add_custom_command(TARGET ${PROJECT_NAME}
