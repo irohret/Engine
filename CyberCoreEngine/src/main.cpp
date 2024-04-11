@@ -1,6 +1,6 @@
 #include "../../CyberCore/src/config.h"
 
-int main() {
+int main(void) {
     CyberCore::CC_Window window(WIDTH, HEIGHT, "CyberCore");
     CyberCore::CC_ImGui CC_ImGui(window);
 

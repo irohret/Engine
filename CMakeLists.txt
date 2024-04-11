@@ -7,6 +7,11 @@ project(CyberCore_Application VERSION 1.0.0)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
+include(CheckOBJCSourceCompiles)
+if(APPLE)
+    enable_language(OBJC)
+endif()
+
 if(WIN32)
   if (CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
     MESSAGE("==================== USING MSVC TO COMPILE ====================")
