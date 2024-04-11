@@ -16,11 +16,14 @@ int main() {
 
         // Create the toolbar at the top
         float menuBarHeight = CC_ImGui._MenuBar();
+        menuBarHeight += 4;
         float toolBarHeight = CC_ImGui._ToolBar(menuBarHeight);
         toolBarHeight = 0;
 
         // // Create and dock the dockspace window
         CC_ImGui.CreateDockSpaceWindow(toolBarHeight + 20);
+
+        //CC_ImGui._ProjectWindow();
 
         // Rendering
         glClearColor(0.45f, 0.55f, 0.60f, 1.00f);

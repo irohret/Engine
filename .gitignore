@@ -23,6 +23,4 @@ CMakeDoxygenDefaults.cmake
 cmake_install.cmake
 cmake_uninstall.cmake
 
-# Core
-CyberCore/Core/
 

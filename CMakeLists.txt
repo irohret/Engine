@@ -9,12 +9,12 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 if(WIN32)
   if (CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
-    MESSAGE("==================== USING MSVC TO COMILE ====================")
+    MESSAGE("==================== USING MSVC TO COMPILE ====================")
     add_compile_options(/wd4819 /wd4244 /wd4267 /wd4305 "/Zc:__cplusplus")
     set(CMAKE_CXX_FLAGS_DEBUG "/O2")
     set(CMAKE_CXX_FLAGS_RELEASE "/O2")
   else()
-    MESSAGE("==================== USING MINGW TO COMILE ====================")
+    MESSAGE("==================== USING MINGW TO COMPILE ====================")
     set(CMAKE_CXX_FLAGS "-Wall -Wextra")
     set(CMAKE_CXX_FLAGS_DEBUG "-g -O3")
     set(CMAKE_CXX_FLAGS_RELEASE "-O3")
@@ -24,7 +24,6 @@ else()
   set(CMAKE_CXX_FLAGS_DEBUG "-g -O3")
   set(CMAKE_CXX_FLAGS_RELEASE "-O3")
 endif()
-
 
 
 # Check if Git is available (used for git submodules)
@@ -51,6 +50,7 @@ include_directories(CyberCore/Vendor/imgui)
 include_directories(CyberCore/Vendor/imgui/backends)
 include_directories(CyberCore/Vendor/glad/include)
 include_directories(CyberCore/Vendor/SDL/src/)
+include_directories()
 
 set(SDL_HEADERS
     CyberCore/Vendor/SDL/include/SDL3/SDL.h
@@ -89,12 +89,25 @@ set(IMGUI_HEADERS
     CyberCore/Vendor/imgui/backends/imgui_impl_opengl3.h
 )
 
-set(CORE_CXX
+# Define CORE sources and headers
+set(CORE_HEADER
     CyberCore/Core/CC_ImGuI.h
+    CyberCore/Core/CC_Window.h
+    CyberCore/Core/panel/HierarchyPanel.hpp
+    CyberCore/Core/panel/InspectorPanel.hpp
+    CyberCore/Core/panel/ProjectPanel.hpp
+    CyberCore/Core/panel/ScenePanel.hpp
+)
+
+set(CORE_SOURCES
     CyberCore/Core/CC_ImGuI.cpp
     CyberCore/Core/CC_Window.cpp
-    CyberCore/Core/CC_Window.h
+    CyberCore/Core/panel/HierarchyPanel.cpp
+    CyberCore/Core/panel/InspectorPanel.cpp
+    CyberCore/Core/panel/ProjectPanel.cpp
+    CyberCore/Core/panel/ScenePanel.cpp
 )
+
 
 # Add subdirectories
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/CyberCore/Vendor/glfw)
@@ -103,13 +116,11 @@ add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/CyberCore/Vendor/SDL)
 
 
 # Add executable
-# add_executable(${PROJECT_NAME} CyberCoreEngine/src/main.cpp ${IMGUI_SOURCES} ${IMGUI_HEADERS})
-
 if(WIN32)
     # prevent CMD prompt window pops up on execution. (WIN32)
-    add_executable(${PROJECT_NAME} WIN32 CyberCoreEngine/src/main.cpp ${CORE_CXX} ${SDL_HEADERS} ${SDL_SOURCES} ${CONFIG} ${IMGUI_SOURCES} ${IMGUI_HEADERS})
+    add_executable(${PROJECT_NAME} WIN32 CyberCoreEngine/src/main.cpp ${CORE_HEADER} ${CORE_SOURCES} ${SDL_HEADERS} ${SDL_SOURCES} ${CONFIG} ${IMGUI_SOURCES} ${IMGUI_HEADERS})
 else()
-      add_executable(${PROJECT_NAME} CyberCoreEngine/src/main.cpp  ${CORE_CXX} ${SDL_HEADERS} ${SDL_SOURCES} ${CONFIG} ${IMGUI_SOURCES} ${IMGUI_HEADERS})
+      add_executable(${PROJECT_NAME} CyberCoreEngine/src/main.cpp  ${CORE_HEADER} ${CORE_SOURCES} ${SDL_HEADERS} ${SDL_SOURCES} ${CONFIG} ${IMGUI_SOURCES} ${IMGUI_HEADERS})
 endif()
 
 
@@ -126,4 +137,3 @@ if(APPLE)
         COMMENT "Running Engine after build"
     )
 endif()
-
