@@ -27,13 +27,7 @@ namespace CyberCore {
       
         // Constructor to initialize CC_ImGui object with a CyberCore window
         CC_ImGui(CyberCore::CC_Window& window);
-        
-        // Methods for different ImGui windows
-        // void _InspectorWindow();   // Contains the inspector side panel. A list of a (selected) GameObject or asset
-        // void _ProjectWindow();     // Project window. List of the assets, sceneces, and script in the working porject.  
-        // void _HierarchyWindow();   // Hierarchy window. A list of the GameObejcts in the current Scene.
-        // void _SceneWindow();       // Scene window. This is the main work area for the editor
-
+    
         // Method to create a dock space window with a specified toolbar height
         // this is control the 4 main ImGui windows 
         void CreateDockSpaceWindow(float toolBarHeight);

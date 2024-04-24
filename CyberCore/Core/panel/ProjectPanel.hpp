@@ -2,6 +2,8 @@
 
 #include "PanelConfig.h"
 
+#include "../Shader/CC_Shader.hpp"
+
 namespace CyberCore {
     class ProjectPanel {
     public:

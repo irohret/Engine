@@ -42,10 +42,11 @@ namespace CyberCore {
         ImGui::DockSpace(dockspace_id, ImVec2(0.0f, 0.0f), dockspace_flags);
 
         // Call functions to create and dock windows
+        CyberCore::ScenePanel();
         CyberCore::InspectorPanel();
         CyberCore::ProjectPanel();
         CyberCore::HierarchyPanel();
-        CyberCore::ScenePanel();
+    
 
         ImGui::End(); // Close the dockspace window
 
@@ -169,6 +170,7 @@ namespace CyberCore {
         ImGui::SetCursorPos(ImVec2(toolbarCenter.x - totalButtonWidth / 2.0f, ImGui::GetCursorPosY()));
         if (ImGui::Button("Play", ImVec2(80, 0))) {
             // Handle play button click
+            CyberCore::GamePanel();
         }
 
         // Position the "Pause" button next to the "Play" button
@@ -195,5 +197,10 @@ namespace CyberCore {
         // Setup ImGui OpenGL binding
         ImGui_ImplOpenGL3_Init("#version 410");
     }
+
+    // void CC_ImGui::shutdown(){
+    //     ImGui_ImplOpenGL3_Shutdown();
+    //     ImGui_ImplGlfw_Shutdown();
+    // }
 }
 

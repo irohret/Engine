@@ -18,6 +18,8 @@ namespace CyberCore {
 
     void CC_Window::update() {
         // update logic???
+        // main looop 
+        // while (!glfwWindowShouldClose(window.getWindow())) ..
     }
 
     void CC_Window::initWindow() {
@@ -30,6 +32,7 @@ namespace CyberCore {
         glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
         glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
         glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+        glfwWindowHint(GLFW_STENCIL_BITS, 8);
 
         _window = glfwCreateWindow(_width, _height, _appName.c_str(), nullptr, nullptr);
 
@@ -47,12 +50,15 @@ namespace CyberCore {
             return;
         }
 
+        glEnable(GL_DEBUG_OUTPUT);  glGetError();
+       //  glDebugMessageCallback(glDebugMessageCallback, 0);
+
            // Set OpenGL viewport size
-        glViewport(0, 0, WIDTH, HEIGHT);
+        glViewport(0, 0, WIDTH, HEIGHT); glGetError();
         glfwSetFramebufferSizeCallback(_window, framebufferSizeCallback);
     }
 
     void CC_Window::framebufferSizeCallback(GLFWwindow* window, int width, int height) {
-        glViewport(0, 0, width, height);
+        glViewport(0, 0, width, height);  glGetError();
     }
 }

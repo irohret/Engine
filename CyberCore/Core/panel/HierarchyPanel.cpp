@@ -26,6 +26,8 @@ namespace CyberCore {
             if (ImGui::BeginMenu("3D Object")) {
                 if (ImGui::MenuItem("Cube")) {
                     // Add code to create a cube
+                    // CyberCore::CC_PrimitiveShape(PrimitiveType::CUBE);
+                    // Create a cube and send it to the scene panel for rendering   
                 }
                 if (ImGui::MenuItem("Sphere")) {
                     // Add code to create a cube
